@@ -1,0 +1,61 @@
+#include<SoftwareSerial.h>
+int speed_ = 150;
+int turn = 110;
+int slow_turn = 70;
+
+SoftwareSerial bot1(2,3);
+
+int pin1=7;
+int pin2=8;
+int pin3=4;
+int pin4=9;
+
+const int ENA=6;
+const int ENB=5;
+
+void setup()
+{
+pinMode(pin1, OUTPUT);
+pinMode(pin2, OUTPUT);
+pinMode(pin3, OUTPUT);
+pinMode(pin4, OUTPUT);
+bot1.begin(9600);
+Serial.begin(9600);
+
+}
+void loop(){
+  int data=0;
+  if(bot1.available()){
+    data=bot1.read();
+    Serial.println(data);
+    switch(data){
+        case 70:
+          forward();
+            break;
+        case 66:
+          backward();
+            break;
+        case 76:
+          left(turn);
+            break;
+        case 82:
+          right(turn);
+            break;
+        case 71:
+          left(slow_turn);
+            break;
+        case 73:
+          right(slow_turn);
+            break;
+        case 72:
+          left(slow_turn);
+            break;
+        case 74:
+          right(slow_turn);
+           break;
+        default:
+        stop_();
+        break;
+    }
+  }
+}
